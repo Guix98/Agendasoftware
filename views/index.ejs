@@ -1,0 +1,120 @@
+<pre>
+        
+    </pre>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda Telefonica</title>
+    <style>
+        input[type='submit'],
+        button,
+        [aria-label] {
+            cursor: pointer;
+        }
+        
+        #spoiler {
+            display: none;
+        }
+        
+        body {
+            background: black !important;
+        }
+    </style>
+    <script>
+        var id;
+
+        function editfunc(nombre, email, telefono, currid) {
+            document.getElementById('spoiler').style.display = 'block'
+            var nom = document.getElementById('edit-name');
+            var em = document.getElementById('edit-email');
+            var num = document.getElementById('edit-number');
+
+            nom.value = nombre;
+            em.value = email;
+            num.value = telefono;
+            id = currid;
+            document.getElementById("editform").action = "edit/" + currid;
+
+        }
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-auto">
+
+
+                <form action="/add" method="POST">
+                    <div class="form-group">
+                        <input type="text" placeholder="New Name" name="nombre" id="name" class="form-control"></div>
+                    <div class="form-group">
+                        <input type="text" placeholder="New Number" name="email" id="email" class="form-control"></div>
+                    <div class="form-group">
+                        <input type="text" placeholder="New Email " name="telefono" id="number" class="form-control"></div>
+
+                    <button type="submit" class="btn btn-success">Add</button>
+
+                </form>
+
+                <div id="spoiler" class="container " role="aria-hidden">
+                    <form action="/" method="POST" id="editform">
+                        <div class="form-group">
+                            <input type="text" name="nombre" id="edit-name" class="form-control"></div>
+                        <div class="form-group">
+                            <input type="text" name="email" id="edit-email" class="form-control"></div>
+                        <div class="form-group">
+                            <input type="text" name="telefono" id="edit-number" class="form-control"></div>
+                        <input type="submit" class="btn btn-warning" value="Edit" /> <a onclick="document.getElementById('spoiler').style.display = 'none';" aria-label="Close">&#10006;</a>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="col  ">
+                <table class="table table-dark ">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Number</th>
+                    </tr>
+                    <tbody>
+
+                        <%
+            for(var i =0; i < contactos.length; i++) { %>
+                            <tr>
+                                <td>
+                                    <%= contactos[i].nombre %>
+                                </td>
+                                <td>
+                                    <%= contactos[i].telefono %>
+                                </td>
+                                <td>
+                                    <%= contactos[i].email %>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Options">
+                                        <button type="button" onclick="editfunc('<%= contactos[i].nombre %>','<%= contactos[i].email %>','<%= contactos[i].telefono %>','<%= contactos[i].id %>');" class="btn btn-primary">Edit</button>
+                                        <button type="button" onclick="window.location.href='/del/<%=contactos[i].id %>'" class="btn btn-danger">Delete</button></div>
+                                </td>
+                            </tr>
+                            <% }%>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+</html>
